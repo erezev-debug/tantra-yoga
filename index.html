@@ -1,0 +1,1591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Yoga Tantra">
+<meta name="theme-color" content="#534AB7">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23534AB7'/%3E%3Ccircle cx='50' cy='30' r='8' fill='white'/%3E%3Cpath d='M 30 75 Q 50 50 70 75' stroke='white' stroke-width='6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23534AB7'/%3E%3Ccircle cx='50' cy='30' r='8' fill='white'/%3E%3Cpath d='M 30 75 Q 50 50 70 75' stroke='white' stroke-width='6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<title>Yoga Tantra Practice</title>
+<style>
+  :root {
+    --bg: #faf9f5;
+    --surface: #ffffff;
+    --surface-2: #f1efe8;
+    --text: #1a1a1a;
+    --text-2: #5f5e5a;
+    --text-3: #888780;
+    --border: rgba(0,0,0,0.1);
+    --border-2: rgba(0,0,0,0.18);
+    --accent: #534AB7;
+    --accent-bg: #EEEDFE;
+    --danger: #A32D2D;
+    --radius: 10px;
+    --radius-lg: 14px;
+    --tap: rgba(83, 74, 183, 0.1);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a1a;
+      --surface: #242422;
+      --surface-2: #2f2e2c;
+      --text: #f1efe8;
+      --text-2: #b4b2a9;
+      --text-3: #888780;
+      --border: rgba(255,255,255,0.1);
+      --border-2: rgba(255,255,255,0.18);
+      --accent: #AFA9EC;
+      --accent-bg: #3C3489;
+      --danger: #F09595;
+      --tap: rgba(175, 169, 236, 0.15);
+    }
+  }
+
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overscroll-behavior-y: contain;
+  }
+  body {
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  #app {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 12px 96px;
+  }
+  header.app-header {
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    padding: 12px 4px 4px;
+    z-index: 100;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .app-title {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 0 0 8px;
+  }
+  .tabs {
+    display: flex;
+    gap: 2px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    border: none; background: transparent;
+    padding: 10px 14px;
+    font-size: 14px; font-weight: 500;
+    color: var(--text-2);
+    border-bottom: 2px solid transparent;
+    cursor: pointer; white-space: nowrap;
+    font-family: inherit;
+  }
+  .tab-btn.active { color: var(--text); border-bottom-color: var(--accent); }
+  .tab-panel { display: none; padding-top: 14px; }
+  .tab-panel.active { display: block; }
+
+  button {
+    font-family: inherit; font-size: 14px;
+    background: var(--surface);
+    color: var(--text);
+    border: 0.5px solid var(--border-2);
+    border-radius: var(--radius);
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  button:active { background: var(--tap); }
+  button:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn-primary {
+    background: var(--accent); color: white;
+    border-color: var(--accent);
+    font-weight: 500;
+  }
+  .btn-primary:active { background: var(--accent); opacity: 0.85; }
+  .btn-icon { padding: 8px 12px; }
+
+  .stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .stat {
+    background: var(--surface-2);
+    border-radius: var(--radius);
+    padding: 10px 12px;
+  }
+  .stat-label { font-size: 11px; color: var(--text-2); margin-bottom: 2px; }
+  .stat-value { font-size: 17px; font-weight: 600; }
+  .chakra-card {
+    background: var(--surface-2);
+    border-radius: var(--radius);
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .chakra-card svg { height: 80px; flex-shrink: 0; }
+  #chakra-legend {
+    font-size: 11px; line-height: 1.6;
+    color: var(--text-2);
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 8px;
+  }
+
+  .add-buttons {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-bottom: 12px;
+  }
+  .add-buttons button {
+    font-size: 13px; padding: 8px 12px;
+    flex: 1 1 auto; min-width: 0;
+  }
+
+  #sequence { display: flex; flex-direction: column; gap: 6px; }
+  .seq-item {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 8px 10px;
+  }
+  .seq-row {
+    display: grid;
+    grid-template-columns: 18px 42px minmax(0, 1fr) 64px 64px;
+    gap: 6px;
+    align-items: center;
+  }
+  .seq-pos {
+    font-size: 10px; color: var(--text-3);
+    text-align: right; font-variant-numeric: tabular-nums;
+  }
+  .seq-figure {
+    width: 42px; height: 42px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--surface-2);
+    border-radius: var(--radius);
+    position: relative;
+    flex-shrink: 0;
+  }
+  .seq-side-badge {
+    position: absolute; top: -3px; right: -3px;
+    width: 16px; height: 16px;
+    border-radius: 999px;
+    background: var(--accent); color: white;
+    font-size: 9px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    border: 1.5px solid var(--bg);
+  }
+  .seq-name-wrap { min-width: 0; }
+  .seq-name {
+    background: transparent; border: none;
+    font-size: 14px; color: var(--text);
+    width: 100%; padding: 2px 0; outline: none;
+    font-family: inherit;
+    text-overflow: ellipsis; white-space: nowrap; overflow: hidden;
+  }
+  .seq-type { font-size: 10px; color: var(--text-3); margin-top: 1px; }
+  .seq-stack { display: flex; flex-direction: column; }
+  .seq-num {
+    background: transparent;
+    border: 0.5px solid var(--border-2);
+    border-radius: var(--radius);
+    width: 100%; text-align: center;
+    font-variant-numeric: tabular-nums;
+    padding: 6px 4px; height: 34px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 16px;
+  }
+  .seq-num:focus { outline: none; border-color: var(--accent); }
+  .seq-stack-label {
+    font-size: 9px; color: var(--text-3);
+    text-align: center; margin-top: 1px;
+    text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .seq-actions {
+    display: flex; justify-content: flex-end;
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 0.5px dashed var(--border);
+    gap: 4px;
+  }
+  .seq-action {
+    background: transparent; border: none;
+    color: var(--text-3); cursor: pointer;
+    padding: 6px 12px; font-size: 16px;
+    border-radius: var(--radius);
+  }
+  .seq-action:active { background: var(--tap); color: var(--text); }
+
+  .seq-chakras {
+    display: flex; gap: 4px;
+    margin-top: 6px;
+    align-items: center; flex-wrap: wrap;
+  }
+  .chakra-pill {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 3px 8px; border-radius: 999px;
+    font-size: 11px; cursor: pointer;
+    border: 0.5px solid var(--border);
+    background: var(--surface);
+    color: var(--text-2);
+    font-family: inherit;
+  }
+  .chakra-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+  .gen-row {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 14px;
+  }
+  .gen-label {
+    font-size: 13px; color: var(--text-2);
+    min-width: 110px;
+  }
+  input[type="range"] {
+    flex: 1; min-width: 0;
+    accent-color: var(--accent);
+    height: 24px;
+  }
+  .gen-out {
+    font-size: 13px; font-weight: 500;
+    min-width: 56px; text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+  .opt-row {
+    display: flex; align-items: center;
+    gap: 8px; font-size: 14px;
+    padding: 6px 0; cursor: pointer;
+  }
+  input[type="checkbox"], input[type="radio"] {
+    width: 18px; height: 18px;
+    accent-color: var(--accent);
+  }
+
+  input[type="text"], input[type="search"] {
+    background: var(--surface);
+    border: 0.5px solid var(--border-2);
+    border-radius: var(--radius);
+    padding: 10px 12px;
+    font-size: 16px;
+    font-family: inherit;
+    color: var(--text);
+    width: 100%;
+  }
+  input:focus { outline: none; border-color: var(--accent); }
+  input[type="file"] {
+    color: var(--text-2); font-size: 13px;
+    padding: 8px;
+  }
+
+  .list-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 12px;
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 4px;
+    font-size: 14px;
+  }
+  .list-item span { flex: 1; min-width: 0; }
+
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 200;
+    display: none;
+    align-items: flex-end;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal {
+    background: var(--bg);
+    width: 100%;
+    max-height: 90vh;
+    max-height: 90dvh;
+    border-radius: 18px 18px 0 0;
+    display: flex; flex-direction: column;
+    padding: 12px 12px env(safe-area-inset-bottom);
+    animation: slideUp 0.25s ease-out;
+  }
+  @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  .modal-handle {
+    width: 36px; height: 4px;
+    background: var(--border-2);
+    border-radius: 999px;
+    margin: 4px auto 12px;
+  }
+  .modal-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 6px;
+  }
+  .modal-title { font-size: 16px; font-weight: 600; }
+  .modal-help { font-size: 12px; color: var(--text-3); margin-bottom: 10px; }
+  .modal-toolbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 12px; margin-bottom: 8px;
+    background: var(--surface-2);
+    border-radius: var(--radius);
+  }
+  .modal-count { font-size: 12px; color: var(--text-2); }
+  .modal-scroll {
+    overflow-y: auto; flex: 1;
+    -webkit-overflow-scrolling: touch;
+    min-height: 200px;
+  }
+  .picker-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+    gap: 6px;
+    padding-bottom: 8px;
+  }
+  .picker-card {
+    position: relative;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 8px 6px 6px; cursor: pointer; gap: 3px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    text-align: center; user-select: none;
+    -webkit-user-select: none;
+  }
+  .picker-card:active { background: var(--surface-2); }
+  .picker-card.selected {
+    background: var(--accent-bg);
+    border-color: var(--accent);
+  }
+  .picker-count-badge {
+    position: absolute; top: 4px; left: 4px;
+    min-width: 20px; height: 20px;
+    padding: 0 5px;
+    border-radius: 999px;
+    background: var(--accent); color: white;
+    font-size: 11px; font-weight: 600;
+    display: none;
+    align-items: center; justify-content: center;
+  }
+  .picker-card.selected .picker-count-badge { display: flex; }
+  .picker-polar {
+    position: absolute; bottom: 4px; right: 4px;
+    padding: 1px 5px;
+    border-radius: 999px;
+    background: var(--surface-2);
+    color: var(--text-2);
+    font-size: 9px;
+    border: 0.5px solid var(--border);
+  }
+  .picker-fig { width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; }
+  .picker-num { font-size: 9px; color: var(--text-3); }
+  .picker-name { font-size: 11px; line-height: 1.25; color: var(--text); padding: 0 2px; }
+  .picker-tag {
+    font-size: 9px; padding: 1px 5px;
+    border-radius: 999px; color: white;
+    margin-top: 2px;
+  }
+  .modal-footer {
+    display: flex; gap: 8px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 0.5px solid var(--border);
+  }
+  .modal-footer button { flex: 1; padding: 12px; font-size: 14px; }
+
+  .practice-now {
+    text-align: center; margin-bottom: 12px;
+  }
+  .now-label {
+    font-size: 11px; color: var(--text-2);
+    text-transform: uppercase; letter-spacing: 0.06em;
+    margin-bottom: 4px;
+  }
+  .now-title {
+    font-size: 24px; font-weight: 600;
+    line-height: 1.2; margin-bottom: 4px;
+  }
+  .now-sub { font-size: 13px; color: var(--text-2); }
+  .practice-main {
+    display: flex; flex-direction: column;
+    align-items: center; gap: 16px;
+    margin: 8px auto 16px;
+  }
+  .now-figure {
+    width: 220px; height: 220px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--surface-2);
+    border-radius: var(--radius-lg);
+    position: relative;
+  }
+  .now-side-badge {
+    position: absolute; bottom: 10px; right: 10px;
+    padding: 4px 10px;
+    background: var(--accent); color: white;
+    border-radius: 999px;
+    font-size: 13px; font-weight: 600;
+  }
+  .timer-wrap { position: relative; width: 200px; height: 200px; }
+  .timer-wrap svg {
+    width: 100%; height: 100%;
+    transform: rotate(-90deg);
+  }
+  .timer-display {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center; flex-direction: column;
+  }
+  .timer-time {
+    font-size: 36px; font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .timer-of { font-size: 12px; color: var(--text-3); }
+  .practice-controls {
+    display: flex; justify-content: center; gap: 8px;
+    margin-bottom: 14px;
+  }
+  .practice-controls button {
+    padding: 12px 16px;
+    font-size: 20px;
+    min-width: 52px;
+  }
+  .practice-controls .play-btn {
+    background: var(--accent); color: white;
+    border-color: var(--accent);
+    min-width: 64px;
+  }
+  .upcoming {
+    display: flex; flex-direction: column; gap: 4px;
+    max-height: 220px; overflow-y: auto;
+  }
+  .upcoming-title {
+    font-size: 12px; color: var(--text-2);
+    margin-bottom: 6px;
+    text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .upcoming-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 10px;
+    background: var(--surface-2);
+    border-radius: var(--radius);
+    font-size: 12px;
+  }
+  .upcoming-fig { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+  .empty {
+    text-align: center; padding: 32px 16px;
+    color: var(--text-3); font-size: 14px;
+  }
+
+  .section-title {
+    font-size: 13px; font-weight: 600;
+    color: var(--text-2);
+    text-transform: uppercase; letter-spacing: 0.05em;
+    margin: 16px 0 8px;
+  }
+  .section-help {
+    font-size: 12px; color: var(--text-3);
+    margin-bottom: 8px;
+  }
+  .chip {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 6px 10px; border-radius: 999px;
+    font-size: 12px;
+    border: 1px solid var(--border-2);
+    background: var(--surface);
+    cursor: pointer;
+    font-family: inherit;
+    color: var(--text-2);
+  }
+  .saved-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 12px;
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 6px;
+    font-size: 14px;
+  }
+  .saved-item .actions { display: flex; gap: 4px; }
+  .saved-item button { padding: 6px 10px; font-size: 12px; }
+</style>
+</head>
+<body>
+
+<div id="app">
+
+  <header class="app-header">
+    <div class="app-title">Yoga tantra practice</div>
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="build">Build</button>
+      <button class="tab-btn" data-tab="generate">Generate</button>
+      <button class="tab-btn" data-tab="lists">My lists</button>
+      <button class="tab-btn" data-tab="audio">Audio</button>
+      <button class="tab-btn" data-tab="play">Practice</button>
+    </div>
+  </header>
+
+  <div class="tab-panel active" id="tab-build">
+    <div class="stats">
+      <div class="stat"><div class="stat-label">Total</div><div class="stat-value" id="stat-total">0 min</div></div>
+      <div class="stat"><div class="stat-label">Asanas</div><div class="stat-value" id="stat-asanas">0</div></div>
+      <div class="stat"><div class="stat-label">Active</div><div class="stat-value" id="stat-active">0 min</div></div>
+    </div>
+    <div class="chakra-card">
+      <svg id="chakra-spine" viewBox="0 0 60 180" aria-label="Chakra emphasis"></svg>
+      <div id="chakra-legend"></div>
+    </div>
+
+    <div class="add-buttons">
+      <button data-action="pick-warmup">＋ Warm-up</button>
+      <button data-action="pick-asana">＋ Asana</button>
+      <button data-action="pick-pranayama">＋ Pranayama</button>
+      <button data-action="pick-meditation">＋ Meditation</button>
+      <button data-action="add-savasana">＋ Savasana</button>
+    </div>
+
+    <div id="sequence"></div>
+    <div id="empty-state" class="empty">Add segments above or generate a sequence to begin.</div>
+
+    <div style="display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap;">
+      <button id="save-btn">Save</button>
+      <button id="load-btn">Load</button>
+      <button id="clear-btn">Clear</button>
+    </div>
+    <div id="saved-list" style="margin-top: 12px; display: none;"></div>
+  </div>
+
+  <div class="tab-panel" id="tab-generate">
+    <div class="gen-row">
+      <label class="gen-label">Duration</label>
+      <input type="range" min="15" max="120" value="60" step="5" id="gen-duration" />
+      <span class="gen-out" id="gen-duration-out">60 min</span>
+    </div>
+    <div class="gen-row">
+      <label class="gen-label">Asana hold</label>
+      <input type="range" min="2" max="15" value="5" step="1" id="gen-asana" />
+      <span class="gen-out" id="gen-asana-out">5 min</span>
+    </div>
+    <div class="gen-row">
+      <label class="gen-label">Rest</label>
+      <input type="range" min="30" max="90" value="60" step="15" id="gen-rest" />
+      <span class="gen-out" id="gen-rest-out">60 sec</span>
+    </div>
+    <div class="section-help">
+      Polar asanas auto-expand to L then R. Order: warm-ups → asanas → pranayama → meditation → savasana.
+    </div>
+    <div class="section-title">Include</div>
+    <div style="display: flex; flex-wrap: wrap; gap: 4px 16px;">
+      <label class="opt-row"><input type="checkbox" id="inc-warmup" checked /> Warm-ups</label>
+      <label class="opt-row"><input type="checkbox" id="inc-pranayama" checked /> Pranayama</label>
+      <label class="opt-row"><input type="checkbox" id="inc-meditation" checked /> Meditation</label>
+      <label class="opt-row"><input type="checkbox" id="inc-savasana" checked /> Savasana</label>
+    </div>
+    <div class="section-title">Chakra emphasis (optional)</div>
+    <div class="section-help">Full sequence still included; spare time goes to focused-chakra asanas.</div>
+    <div id="chakra-focus-row" style="display: flex; gap: 6px; flex-wrap: wrap;"></div>
+    <button id="generate-btn" class="btn-primary" style="margin-top: 16px; width: 100%; padding: 14px;">Generate sequence</button>
+  </div>
+
+  <div class="tab-panel" id="tab-lists">
+    <div class="section-help">Add your pranayamas and meditations. They appear in the picker when you tap their buttons.</div>
+    <div class="section-title">Pranayamas</div>
+    <div style="display: flex; gap: 6px; margin-bottom: 8px;">
+      <input type="text" id="new-pranayama" placeholder="e.g. Nadi shodhana" />
+      <button id="add-pranayama" style="flex-shrink: 0;">Add</button>
+    </div>
+    <div id="pranayama-list"></div>
+    <div class="section-title">Meditations</div>
+    <div style="display: flex; gap: 6px; margin-bottom: 8px;">
+      <input type="text" id="new-meditation" placeholder="e.g. Trataka" />
+      <button id="add-meditation" style="flex-shrink: 0;">Add</button>
+    </div>
+    <div id="meditation-list"></div>
+  </div>
+
+  <div class="tab-panel" id="tab-audio">
+    <div class="section-title">Background</div>
+    <label class="opt-row"><input type="radio" name="audio" value="silence" checked /> Silence</label>
+    <label class="opt-row"><input type="radio" name="audio" value="drone" /> Synthesized Om drone</label>
+    <label class="opt-row"><input type="radio" name="audio" value="tanpura" /> Synthesized tanpura</label>
+    <label class="opt-row"><input type="radio" name="audio" value="custom" /> Custom file</label>
+    <div id="custom-upload" style="display: none; margin: 8px 0;">
+      <input type="file" id="audio-file" accept="audio/*" />
+      <div id="audio-file-name" style="font-size: 12px; color: var(--text-3); margin-top: 4px;"></div>
+    </div>
+    <div class="gen-row" style="margin-top: 16px;">
+      <label class="gen-label">Volume</label>
+      <input type="range" min="0" max="100" value="40" step="1" id="vol" />
+      <span class="gen-out" id="vol-out">40</span>
+    </div>
+    <div class="section-title">Transitions</div>
+    <label class="opt-row"><input type="checkbox" id="bell-toggle" checked /> Singing bowl at each transition</label>
+  </div>
+
+  <div class="tab-panel" id="tab-play">
+    <div id="practice-empty" class="empty">Build or generate a sequence first.</div>
+    <div id="practice-active" style="display: none;">
+      <div class="practice-now">
+        <div class="now-label" id="now-label">Up next</div>
+        <div class="now-title" id="now-title">—</div>
+        <div class="now-sub" id="now-sub">—</div>
+      </div>
+      <div class="practice-main">
+        <div class="now-figure" id="now-figure"></div>
+        <div class="timer-wrap">
+          <svg viewBox="0 0 200 200">
+            <circle cx="100" cy="100" r="88" fill="none" stroke="var(--border)" stroke-width="6"/>
+            <circle id="progress-ring" cx="100" cy="100" r="88" fill="none" stroke="var(--accent)" stroke-width="6" stroke-dasharray="553" stroke-dashoffset="553" stroke-linecap="round"/>
+          </svg>
+          <div class="timer-display">
+            <div class="timer-time" id="timer-display">00:00</div>
+            <div class="timer-of" id="timer-of">of 00:00</div>
+          </div>
+        </div>
+      </div>
+      <div class="practice-controls">
+        <button id="prev-btn" aria-label="Previous">⏮</button>
+        <button id="play-btn" class="play-btn" aria-label="Play"><span id="play-icon">▶</span></button>
+        <button id="next-btn" aria-label="Next">⏭</button>
+        <button id="stop-btn" aria-label="Stop">⏹</button>
+      </div>
+      <div class="upcoming-title">Up coming</div>
+      <div class="upcoming" id="upcoming"></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="picker-overlay">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <div class="modal-title" id="picker-title">Pick</div>
+      <button id="picker-close" class="btn-icon">✕</button>
+    </div>
+    <div class="modal-help" id="picker-help"></div>
+    <div class="modal-toolbar" id="picker-toolbar">
+      <div class="modal-count" id="picker-count">0 selected</div>
+      <div style="display: flex; gap: 6px;">
+        <button id="picker-select-all" style="font-size: 12px; padding: 6px 10px;">All</button>
+        <button id="picker-clear" style="font-size: 12px; padding: 6px 10px;">Clear</button>
+      </div>
+    </div>
+    <div class="modal-scroll">
+      <div class="picker-grid" id="picker-grid"></div>
+      <div id="picker-empty" class="empty" style="display: none;">
+        No items yet. Add them in the "My lists" tab.
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button id="picker-cancel">Cancel</button>
+      <button id="picker-add" class="btn-primary" disabled>Add 0</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  // ============== POSE SVG ==============
+  const h=(cx,cy,r=4.5)=>`<circle cx="${cx}" cy="${cy}" r="${r}" fill="currentColor"/>`;
+  const l=(x1,y1,x2,y2,w=5.5)=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="currentColor" stroke-width="${w}" stroke-linecap="round"/>`;
+  const t=(x1,y1,x2,y2,w=11)=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="currentColor" stroke-width="${w}" stroke-linecap="round"/>`;
+  const c=(d,w=10)=>`<path d="${d}" stroke="currentColor" stroke-width="${w}" fill="none" stroke-linecap="round"/>`;
+
+  const POSE = {
+    'Padahastasana':()=>`${h(50,78)}${c('M 50 78 Q 56 60 50 42',11)}${l(50,50,48,88)}${l(50,50,52,88)}${l(50,78,50,88,5)}`,
+    'Ardha Chandrasana':()=>`${h(50,16)}${l(50,16,50,4,5)}${t(50,20,50,60)}${l(50,60,46,92,6)}${l(50,60,54,92,6)}`,
+    'Tadasana':()=>`${h(50,18)}${t(50,22,50,60)}${l(50,26,40,6)}${l(50,26,60,6)}${l(50,60,46,92,6)}${l(50,60,54,92,6)}`,
+    'Sahaja Agnisara Dauti':()=>`${h(50,18)}${t(50,22,50,56,13)}${l(50,30,36,50)}${l(50,30,64,50)}${l(36,50,40,56,5)}${l(64,50,60,56,5)}${l(50,56,40,92,7)}${l(50,56,60,92,7)}`,
+    'Trikonasana':()=>`${h(32,22)}${t(34,25,58,60)}${l(36,33,18,8)}${l(58,60,70,36)}${l(58,60,26,92,6.5)}${l(58,60,86,92,6.5)}`,
+    'Uddiyana Bandha':()=>`${h(50,24)}${c('M 50 27 Q 52 45 50 58',12)}${l(50,36,36,64)}${l(50,36,64,64)}${l(50,58,40,92,7)}${l(50,58,60,92,7)}`,
+    'Katichakrasana':()=>`${h(50,18)}${t(50,22,50,60)}${l(50,28,86,24)}${l(50,30,30,36)}${l(50,60,46,92,6)}${l(50,60,54,92,6)}`,
+    'Garudasana':()=>`${h(50,16)}${t(50,20,50,60)}${l(50,28,56,38,5)}${l(50,30,44,38,5)}${l(56,38,52,28,4.5)}${l(44,38,48,28,4.5)}${l(50,60,44,84,7)}${l(44,84,56,92,6)}${l(50,60,56,76,6)}`,
+    'Prasarita Padottanasana':()=>`${h(50,80)}${c('M 50 80 Q 50 65 50 52',11)}${l(50,52,22,92,6.5)}${l(50,52,78,92,6.5)}${l(50,78,50,92,5)}`,
+    'Bhadrasana':()=>`${h(50,20)}${t(50,24,50,58)}${l(50,36,30,54)}${l(50,36,70,54)}${l(50,58,26,80,7)}${l(50,58,74,80,7)}${l(26,80,50,84,6)}${l(74,80,50,84,6)}`,
+    'Shalabhasana':()=>`${h(22,60)}${t(24,62,64,56)}${l(64,56,92,30,6.5)}${l(64,56,86,26,6.5)}${l(22,60,12,58,5)}${l(22,60,12,64,5)}`,
+    'Nabhyasana':()=>`${h(20,52)}${t(22,54,60,46)}${l(60,46,92,16,6.5)}${l(60,46,88,12,6.5)}${l(20,52,10,50,5)}${l(20,52,10,54,5)}`,
+    'Bhujangasana':()=>`${h(26,32)}${c('M 28 34 Q 40 56 88 72',11)}${l(34,42,28,70)}${l(38,42,38,70)}`,
+    'Paschimottanasana':()=>`${h(32,56)}${c('M 34 58 Q 50 62 84 68',11)}${l(34,54,22,46)}${l(38,56,26,50)}${l(84,68,90,60,5)}`,
+    'Preparation for Padmasana':()=>`${h(50,24)}${t(50,28,50,60)}${l(50,38,32,56)}${l(50,38,68,56)}${l(50,60,24,80,7)}${l(50,60,76,80,7)}${l(24,80,56,72,6)}${l(76,80,44,72,6)}`,
+    'Janusirsasana':()=>`${h(34,56)}${c('M 36 58 Q 56 64 80 70',11)}${l(34,52,22,44)}${l(38,56,26,50)}${l(80,70,88,64,5)}${l(58,66,44,80,6)}`,
+    'Pavana Muktasana':()=>`${h(30,58)}${t(32,60,60,60,12)}${l(60,60,52,42,6.5)}${l(52,42,42,52)}${l(32,60,22,52)}${l(34,62,24,54)}`,
+    'Marjariasana':()=>`${h(22,52)}${c('M 24 54 Q 50 38 78 50',11)}${l(28,56,28,84)}${l(32,56,32,84)}${l(72,52,70,84)}${l(76,52,76,84)}`,
+    'Gomukhasana':()=>`${h(50,20)}${t(50,24,50,58)}${l(50,28,54,12,5)}${l(54,12,48,22,4.5)}${l(50,32,44,48,5)}${l(44,48,54,44,4.5)}${l(50,58,30,78,7)}${l(50,58,70,78,7)}${l(30,78,58,70,6)}${l(70,78,42,70,6)}`,
+    'Ardha Matsyendrasana':()=>`${h(58,22)}${t(56,26,50,60)}${l(54,36,36,30)}${l(52,38,70,50)}${l(50,60,28,70,7)}${l(28,70,62,76,6)}${l(50,60,72,80,7)}${l(72,80,50,70,6)}`,
+    'Sukhasana':()=>`${h(50,22)}${t(50,26,50,60)}${l(50,36,32,50,5)}${l(50,36,68,50,5)}${l(50,60,24,76,7)}${l(50,60,76,76,7)}${l(24,76,60,78,6)}${l(76,76,40,78,6)}`,
+    'Svastikasana':()=>`${h(50,22)}${t(50,26,50,60)}${l(50,38,32,50,5)}${l(50,38,68,50,5)}${l(32,50,44,52,4.5)}${l(68,50,56,52,4.5)}${l(50,60,22,72,7)}${l(50,60,78,72,7)}${l(22,72,52,78,6)}${l(78,72,48,78,6)}`,
+    'Kurmasana':()=>`${h(50,68)}${t(46,68,22,62,10)}${t(54,68,78,62,10)}${l(32,64,30,54,5)}${l(68,64,70,54,5)}`,
+    'Yogasana':()=>`${h(50,64)}${t(48,66,22,68,10)}${t(52,66,78,68,10)}${l(38,68,34,80)}${l(62,68,66,80)}`,
+    'Vajrasana':()=>`${h(50,26)}${t(50,30,50,64)}${l(50,38,38,54)}${l(50,38,62,54)}${l(50,64,34,82,7)}${l(50,64,66,82,7)}${l(34,82,50,88,6)}${l(66,82,50,88,6)}`,
+    'Shashasana':()=>`${h(26,54)}${c('M 28 56 Q 50 60 72 70',11)}${l(26,48,16,36,5)}${l(30,48,22,34,5)}${l(72,70,82,84,6)}${l(72,70,60,84,6)}`,
+    'Setubandhasana':()=>`${h(80,76)}${c('M 22 80 Q 50 28 80 76',12)}${l(22,80,12,78,5)}${l(22,80,12,84,5)}`,
+    'Sarvangasana':()=>`${h(50,90)}${t(50,86,50,14)}${l(40,80,30,76)}${l(60,80,70,76)}${l(48,16,44,6,5)}${l(52,16,56,6,5)}`,
+    'Halasana':()=>`${h(74,82)}${c('M 74 82 Q 56 30 24 30',12)}${l(24,30,12,28,5)}${l(24,30,12,34,5)}${l(66,82,60,86,5)}`,
+    'Ardha Sirsasana':()=>`${h(50,82)}${l(36,86,50,80,6)}${l(64,86,50,80,6)}${t(50,80,50,40)}${l(50,40,36,22,6)}${l(50,40,64,22,6)}`,
+    'Sirsasana':()=>`${h(50,84)}${l(40,88,50,80,6)}${l(60,88,50,80,6)}${t(50,80,50,14)}${l(48,16,46,6,5)}${l(52,16,54,6,5)}`,
+    'Neck circles':()=>`${h(50,26,6)}<path d="M 30 26 Q 50 4 70 26" stroke="currentColor" stroke-width="2" fill="none" stroke-dasharray="3 2"/><path d="M 70 26 Q 50 48 30 26" stroke="currentColor" stroke-width="2" fill="none" stroke-dasharray="3 2"/>${t(50,33,50,68)}${l(50,40,40,58)}${l(50,40,60,58)}${l(50,68,46,92,6)}${l(50,68,54,92,6)}`,
+    'Shoulder rolls':()=>`${h(50,18)}${t(50,22,50,60)}<circle cx="40" cy="30" r="3.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="60" cy="30" r="3.5" fill="none" stroke="currentColor" stroke-width="2"/>${l(40,30,36,52)}${l(60,30,64,52)}${l(50,60,46,92,6)}${l(50,60,54,92,6)}`,
+    'Horizontal arm sweep':()=>`${h(50,18)}${t(50,22,50,60)}${l(50,32,88,32)}${l(50,32,64,26,5)}${l(50,60,46,92,6)}${l(50,60,54,92,6)}`,
+    'Overhead arm reach':()=>`${h(50,28)}${t(50,32,50,68)}${l(50,36,38,8)}${l(50,36,62,8)}${l(50,68,46,92,6)}${l(50,68,54,92,6)}`,
+    'Overhead clasp stretch':()=>`${h(50,24)}${t(50,28,50,64)}${l(50,30,50,8)}<circle cx="50" cy="8" r="5" fill="currentColor"/>${l(50,64,46,92,6)}${l(50,64,54,92,6)}`,
+    'Side bend':()=>`${h(34,22)}<path d="M 36 25 Q 48 48 56 70" stroke="currentColor" stroke-width="11" fill="none" stroke-linecap="round"/>${l(36,28,22,4)}${l(56,70,52,92,6)}${l(56,70,60,92,6)}`,
+    'Hip / torso twist':()=>`${h(50,18)}${t(50,22,50,62)}${l(50,34,28,28)}${l(50,34,74,42)}${l(50,62,46,92,6)}${l(50,62,54,92,6)}<path d="M 38 50 Q 50 56 62 50" stroke="currentColor" stroke-width="1.5" fill="none" stroke-dasharray="2 2"/>`,
+    'Wide-stance squat':()=>`${h(50,24)}${t(50,28,50,56,12)}${l(50,36,36,50)}${l(50,36,64,50)}${l(36,50,40,58,5)}${l(64,50,60,58,5)}${l(50,56,22,80,7)}${l(50,56,78,80,7)}${l(22,80,22,92,6)}${l(78,80,78,92,6)}`,
+    'Shoulder / chest opener':()=>`${h(50,18)}${t(50,22,50,62)}${l(50,32,84,22)}${l(50,32,16,22)}${l(50,62,46,92,6)}${l(50,62,54,92,6)}`,
+  };
+
+  function poseSvg(name, side=null) {
+    const baseName = name.replace(/ — [LR]$/, '');
+    const fn = POSE[baseName];
+    if (!fn) return `<svg viewBox="0 0 100 100" width="100%" height="100%" style="color: var(--text-3);"><circle cx="50" cy="50" r="6" fill="currentColor"/></svg>`;
+    const transform = side === 'R' ? 'transform="scale(-1, 1) translate(-100, 0)"' : '';
+    return `<svg viewBox="0 0 100 100" width="100%" height="100%"><g ${transform}>${fn()}</g></svg>`;
+  }
+
+  function typeIcon(type) {
+    const icons = {
+      rest: '<circle cx="50" cy="50" r="22" fill="none" stroke="currentColor" stroke-width="5"/><line x1="42" y1="42" x2="42" y2="58" stroke="currentColor" stroke-width="5" stroke-linecap="round"/><line x1="58" y1="42" x2="58" y2="58" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>',
+      pranayama: '<path d="M 20 50 Q 35 30 50 50 Q 65 70 80 50" stroke="currentColor" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M 25 38 Q 40 22 55 38" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.5"/>',
+      meditation: '<circle cx="50" cy="35" r="8" fill="currentColor"/><path d="M 50 43 L 50 65 M 35 60 Q 50 50 65 60" stroke="currentColor" stroke-width="5" fill="none" stroke-linecap="round"/>',
+      savasana: '<rect x="20" y="55" width="60" height="10" rx="5" fill="currentColor"/><circle cx="30" cy="48" r="6" fill="currentColor"/>',
+    };
+    return `<svg viewBox="0 0 100 100" width="100%" height="100%" style="color: var(--text-3);">${icons[type] || '<circle cx="50" cy="50" r="6" fill="currentColor"/>'}</svg>`;
+  }
+
+  // ============== DATA ==============
+  const CHAKRAS = [
+    {id:'sahasrara',   name:'Sahasrara',   tag:'SA', color:'#7F77DD', y:18},
+    {id:'ajna',        name:'Ajna',        tag:'AJ', color:'#378ADD', y:38},
+    {id:'vishuddha',   name:'Vishuddha',   tag:'VI', color:'#1D9E75', y:58},
+    {id:'anahata',     name:'Anahata',     tag:'AN', color:'#97C459', y:80},
+    {id:'manipura',    name:'Manipura',    tag:'MA', color:'#EF9F27', y:105},
+    {id:'svadhisthana',name:'Svadhisthana',tag:'SV', color:'#D85A30', y:132},
+    {id:'muladhara',   name:'Muladhara',   tag:'MU', color:'#E24B4A', y:160},
+  ];
+  const tagMap = (tag) => CHAKRAS.find(c => c.tag === tag);
+
+  const POLAR_NAMES = new Set([
+    'Trikonasana','Katichakrasana','Garudasana','Nabhyasana','Preparation for Padmasana','Janusirsasana'
+  ]);
+
+  const ASANA_LIBRARY = [
+    {name:'Padahastasana',tags:['MU']},{name:'Ardha Chandrasana',tags:['SV']},
+    {name:'Tadasana',tags:['MU']},{name:'Sahaja Agnisara Dauti',tags:['MA']},
+    {name:'Trikonasana',tags:['MA']},{name:'Uddiyana Bandha',tags:['MA']},
+    {name:'Katichakrasana',tags:['AN']},{name:'Garudasana',tags:['AJ']},
+    {name:'Prasarita Padottanasana',tags:['SA']},{name:'Bhadrasana',tags:['MU']},
+    {name:'Shalabhasana',tags:['SV']},{name:'Nabhyasana',tags:['MA']},
+    {name:'Bhujangasana',tags:['AN']},{name:'Paschimottanasana',tags:['MU']},
+    {name:'Preparation for Padmasana',tags:['MU']},{name:'Janusirsasana',tags:['MU']},
+    {name:'Pavana Muktasana',tags:['MA']},{name:'Marjariasana',tags:['MA']},
+    {name:'Gomukhasana',tags:['AN']},{name:'Ardha Matsyendrasana',tags:['VI']},
+    {name:'Sukhasana',tags:['SV']},{name:'Svastikasana',tags:['MA']},
+    {name:'Kurmasana',tags:['AN']},{name:'Yogasana',tags:['AN']},
+    {name:'Vajrasana',tags:['AN','AJ']},{name:'Shashasana',tags:['SA']},
+    {name:'Setubandhasana',tags:['MA','VI']},{name:'Sarvangasana',tags:['VI']},
+    {name:'Halasana',tags:['AJ']},{name:'Ardha Sirsasana',tags:['SA']},
+    {name:'Sirsasana',tags:['SA']},
+  ];
+  const WARMUP_LIBRARY = [
+    'Neck circles','Shoulder rolls','Horizontal arm sweep',
+    'Overhead arm reach','Overhead clasp stretch','Side bend',
+    'Hip / torso twist','Wide-stance squat','Shoulder / chest opener'
+  ];
+
+  const TYPES = {
+    warmup:    {name:'Warm-up',    default:60,    unit:'sec',hasRest:true, restDefault:30, color:'#854F0B'},
+    asana:     {name:'Asana',      default:5*60,  unit:'min',hasRest:true, restDefault:60, color:'#3C3489'},
+    rest:      {name:'Rest',       default:60,    unit:'sec',hasRest:false,               color:'#444441'},
+    pranayama: {name:'Pranayama',  default:5*60,  unit:'min',hasRest:false,               color:'#085041'},
+    meditation:{name:'Meditation', default:10*60, unit:'min',hasRest:false,               color:'#0C447C'},
+    savasana:  {name:'Savasana',   default:8*60,  unit:'min',hasRest:false,               color:'#72243E'},
+  };
+
+  // ============== STATE + PERSISTENCE ==============
+  let sequence = [];
+  let saved = [];
+  let pranayamaList = [];
+  let meditationList = [];
+  let audioPrefs = { kind:'silence', volume:40, bell:true };
+
+  const STORAGE_KEY = 'yoga-tantra-v1';
+  function persist() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        sequence, saved, pranayamaList, meditationList, audioPrefs
+      }));
+    } catch(e) {}
+  }
+  function loadState() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      const d = JSON.parse(raw);
+      if (Array.isArray(d.sequence)) sequence = d.sequence;
+      if (Array.isArray(d.saved)) saved = d.saved;
+      if (Array.isArray(d.pranayamaList)) pranayamaList = d.pranayamaList;
+      if (Array.isArray(d.meditationList)) meditationList = d.meditationList;
+      if (d.audioPrefs) audioPrefs = Object.assign(audioPrefs, d.audioPrefs);
+    } catch(e) {}
+  }
+  loadState();
+
+  let playState = { idx: 0, remaining: 0, total: 0, playing: false, interval: null };
+  let runList = [];
+
+  // ============== HELPERS ==============
+  const uid = () => Math.random().toString(36).slice(2,9);
+  const fmtTime = (s) => {
+    s = Math.max(0, Math.round(s));
+    const m = Math.floor(s/60), sec = s%60;
+    return String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0');
+  };
+  const fmtMin = (s) => {
+    const m = s/60;
+    return (m%1===0 ? m.toFixed(0) : m.toFixed(1)) + ' min';
+  };
+  const escapeAttr = (s) => String(s).replace(/"/g,'&quot;').replace(/</g,'&lt;');
+  function chakrasFromTags(tags) {
+    const m = {};
+    tags.forEach(t => { const c = tagMap(t); if (c) m[c.id] = 1; });
+    return m;
+  }
+  function getFigureFor(item) {
+    if (item.type === 'asana' || item.type === 'warmup') return poseSvg(item.name, item.side || null);
+    return typeIcon(item.type);
+  }
+
+  function addAsanaSegment(name, opts={}) {
+    const baseName = name;
+    const lib = ASANA_LIBRARY.find(a => a.name === baseName);
+    const baseChakras = lib ? chakrasFromTags(lib.tags) : {};
+    const duration = opts.duration != null ? opts.duration : TYPES.asana.default;
+    const rest = opts.restAfter != null ? opts.restAfter : TYPES.asana.restDefault;
+    if (POLAR_NAMES.has(baseName)) {
+      ['L','R'].forEach(side => {
+        sequence.push({
+          id: uid(), type:'asana',
+          name: baseName + ' — ' + side,
+          baseName, side,
+          duration, restAfter: rest,
+          chakras: Object.assign({}, baseChakras),
+        });
+      });
+    } else {
+      sequence.push({
+        id: uid(), type:'asana',
+        name: baseName, baseName,
+        duration, restAfter: rest,
+        chakras: baseChakras,
+      });
+    }
+  }
+  function addSegment(type, opts={}) {
+    if (type === 'asana') { addAsanaSegment(opts.name || 'Asana', opts); return; }
+    const t = TYPES[type];
+    const name = opts.name || t.name;
+    sequence.push({
+      id: uid(), type, name,
+      duration: opts.duration != null ? opts.duration : t.default,
+      restAfter: opts.restAfter != null ? opts.restAfter : (t.hasRest ? t.restDefault : null),
+      chakras: opts.chakras || {},
+    });
+  }
+
+  // ============== TABS ==============
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+      if (btn.dataset.tab === 'play') refreshPractice();
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
+  });
+
+  // ============== LISTS ==============
+  function renderLists() {
+    const pl = document.getElementById('pranayama-list');
+    const ml = document.getElementById('meditation-list');
+    pl.innerHTML = pranayamaList.length === 0
+      ? '<div class="empty" style="padding:12px;">No pranayamas yet.</div>'
+      : pranayamaList.map((n,i)=>`<div class="list-item"><span>${escapeAttr(n)}</span><button data-rmp="${i}" style="padding:6px 10px;">✕</button></div>`).join('');
+    ml.innerHTML = meditationList.length === 0
+      ? '<div class="empty" style="padding:12px;">No meditations yet.</div>'
+      : meditationList.map((n,i)=>`<div class="list-item"><span>${escapeAttr(n)}</span><button data-rmm="${i}" style="padding:6px 10px;">✕</button></div>`).join('');
+    pl.querySelectorAll('[data-rmp]').forEach(b => b.addEventListener('click', e => {
+      pranayamaList.splice(+e.currentTarget.dataset.rmp,1); renderLists(); persist();
+    }));
+    ml.querySelectorAll('[data-rmm]').forEach(b => b.addEventListener('click', e => {
+      meditationList.splice(+e.currentTarget.dataset.rmm,1); renderLists(); persist();
+    }));
+  }
+  document.getElementById('add-pranayama').addEventListener('click', () => {
+    const v = document.getElementById('new-pranayama').value.trim();
+    if (v) { pranayamaList.push(v); document.getElementById('new-pranayama').value=''; renderLists(); persist(); }
+  });
+  document.getElementById('add-meditation').addEventListener('click', () => {
+    const v = document.getElementById('new-meditation').value.trim();
+    if (v) { meditationList.push(v); document.getElementById('new-meditation').value=''; renderLists(); persist(); }
+  });
+  document.getElementById('new-pranayama').addEventListener('keydown', e => { if (e.key==='Enter') document.getElementById('add-pranayama').click(); });
+  document.getElementById('new-meditation').addEventListener('keydown', e => { if (e.key==='Enter') document.getElementById('add-meditation').click(); });
+  renderLists();
+
+  // ============== PICKER ==============
+  const picker = document.getElementById('picker-overlay');
+  let pickerKind = null, pickerLib = [];
+  let selectionOrder = [], selectionCounts = {};
+
+  function renderPickerSelectionState() {
+    const total = selectionOrder.length;
+    const expanded = pickerKind === 'asana'
+      ? selectionOrder.reduce((n,nm) => n + (POLAR_NAMES.has(nm) ? 2 : 1), 0)
+      : total;
+    const label = (pickerKind === 'asana' && expanded !== total)
+      ? total + ' selected (' + expanded + ' with L/R)'
+      : total + ' selected';
+    document.getElementById('picker-count').textContent = label;
+    const addBtn = document.getElementById('picker-add');
+    addBtn.disabled = total === 0;
+    addBtn.textContent = total === 0 ? 'Add 0' : 'Add ' + expanded;
+    document.querySelectorAll('.picker-card').forEach(card => {
+      const nm = card.dataset.name;
+      const count = selectionCounts[nm] || 0;
+      const badge = card.querySelector('.picker-count-badge');
+      if (count > 0) {
+        card.classList.add('selected');
+        badge.textContent = count > 1 ? '×'+count : '✓';
+      } else card.classList.remove('selected');
+    });
+  }
+
+  function tapCard(name) {
+    selectionOrder.push(name);
+    selectionCounts[name] = (selectionCounts[name] || 0) + 1;
+    renderPickerSelectionState();
+  }
+  function untapCard(name) {
+    if (!selectionCounts[name]) return;
+    selectionCounts[name]--;
+    for (let i = selectionOrder.length-1; i >= 0; i--) {
+      if (selectionOrder[i] === name) { selectionOrder.splice(i,1); break; }
+    }
+    if (selectionCounts[name] <= 0) delete selectionCounts[name];
+    renderPickerSelectionState();
+  }
+
+  function openPicker(kind) {
+    pickerKind = kind;
+    selectionOrder = [];
+    selectionCounts = {};
+    const titles = {asana:'Pick asanas', warmup:'Pick warm-ups', pranayama:'Pick pranayamas', meditation:'Pick meditations'};
+    const helps = {
+      asana:'Tap to add. Polar asanas auto-expand to L+R. Long-press to remove one.',
+      warmup:'Tap to add (tap again for duplicates). Long-press to remove one.',
+      pranayama:'Tap to add from your list. Long-press to remove one.',
+      meditation:'Tap to add from your list. Long-press to remove one.'
+    };
+    document.getElementById('picker-title').textContent = titles[kind];
+    document.getElementById('picker-help').textContent = helps[kind];
+    if (kind === 'asana') pickerLib = ASANA_LIBRARY;
+    else if (kind === 'warmup') pickerLib = WARMUP_LIBRARY.map(w => ({name:w, tags:[]}));
+    else if (kind === 'pranayama') pickerLib = pranayamaList.map(p => ({name:p, tags:[]}));
+    else if (kind === 'meditation') pickerLib = meditationList.map(m => ({name:m, tags:[]}));
+    const grid = document.getElementById('picker-grid');
+    const empty = document.getElementById('picker-empty');
+    const toolbar = document.getElementById('picker-toolbar');
+    grid.innerHTML = '';
+    if (pickerLib.length === 0) {
+      grid.style.display = 'none'; empty.style.display = 'block'; toolbar.style.display = 'none';
+    } else {
+      grid.style.display = 'grid'; empty.style.display = 'none'; toolbar.style.display = 'flex';
+      pickerLib.forEach((item, i) => {
+        const card = document.createElement('div');
+        card.className = 'picker-card';
+        card.dataset.name = item.name;
+        const isPose = kind === 'asana' || kind === 'warmup';
+        const figHtml = isPose ? poseSvg(item.name) : typeIcon(kind);
+        const tagsHtml = (item.tags || []).map(t => {
+          const c = tagMap(t);
+          return `<span class="picker-tag" style="background:${c.color};">${t}</span>`;
+        }).join('');
+        const polarBadge = (kind === 'asana' && POLAR_NAMES.has(item.name)) ? '<div class="picker-polar">L+R</div>' : '';
+        card.innerHTML = `
+          <div class="picker-count-badge"></div>
+          <div class="picker-num">${i+1}</div>
+          <div class="picker-fig" style="color: var(--text);">${figHtml}</div>
+          <div class="picker-name">${escapeAttr(item.name)}</div>
+          ${tagsHtml ? '<div>'+tagsHtml+'</div>' : ''}
+          ${polarBadge}
+        `;
+        // Tap = add, long press = remove
+        let pressTimer = null, longPressed = false;
+        const start = (e) => {
+          longPressed = false;
+          pressTimer = setTimeout(() => {
+            longPressed = true;
+            untapCard(item.name);
+            if (navigator.vibrate) navigator.vibrate(20);
+          }, 500);
+        };
+        const cancel = () => { if (pressTimer) { clearTimeout(pressTimer); pressTimer = null; } };
+        const end = (e) => {
+          if (pressTimer) { clearTimeout(pressTimer); pressTimer = null; }
+          if (!longPressed) tapCard(item.name);
+        };
+        card.addEventListener('touchstart', start, {passive:true});
+        card.addEventListener('touchend', end);
+        card.addEventListener('touchcancel', cancel);
+        card.addEventListener('touchmove', cancel);
+        card.addEventListener('mousedown', start);
+        card.addEventListener('mouseup', end);
+        card.addEventListener('mouseleave', cancel);
+        card.addEventListener('contextmenu', (e) => { e.preventDefault(); untapCard(item.name); });
+        grid.appendChild(card);
+      });
+    }
+    renderPickerSelectionState();
+    picker.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closePicker() {
+    picker.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  document.getElementById('picker-close').addEventListener('click', closePicker);
+  document.getElementById('picker-cancel').addEventListener('click', closePicker);
+  picker.addEventListener('click', e => { if (e.target === picker) closePicker(); });
+  document.getElementById('picker-select-all').addEventListener('click', () => {
+    pickerLib.forEach(item => {
+      if (!selectionCounts[item.name]) { selectionOrder.push(item.name); selectionCounts[item.name] = 1; }
+    });
+    renderPickerSelectionState();
+  });
+  document.getElementById('picker-clear').addEventListener('click', () => {
+    selectionOrder = []; selectionCounts = {}; renderPickerSelectionState();
+  });
+  document.getElementById('picker-add').addEventListener('click', () => {
+    selectionOrder.forEach(name => addSegment(pickerKind, {name}));
+    closePicker();
+    render(); persist();
+  });
+
+  document.querySelectorAll('.add-buttons button').forEach(b => {
+    b.addEventListener('click', () => {
+      const a = b.dataset.action;
+      if (a === 'pick-asana') openPicker('asana');
+      else if (a === 'pick-warmup') openPicker('warmup');
+      else if (a === 'pick-pranayama') openPicker('pranayama');
+      else if (a === 'pick-meditation') openPicker('meditation');
+      else if (a === 'add-savasana') { addSegment('savasana'); render(); persist(); }
+    });
+  });
+  document.getElementById('clear-btn').addEventListener('click', () => {
+    if (sequence.length && !confirm('Clear the entire sequence?')) return;
+    sequence = []; render(); persist();
+  });
+
+  // ============== RENDER SEQUENCE ==============
+  function render() {
+    const wrap = document.getElementById('sequence');
+    const empty = document.getElementById('empty-state');
+    wrap.innerHTML = '';
+    if (sequence.length === 0) {
+      empty.style.display = 'block';
+      updateStats();
+      return;
+    }
+    empty.style.display = 'none';
+    sequence.forEach((item, i) => {
+      const t = TYPES[item.type];
+      const isSec = t.unit === 'sec';
+      const displayVal = isSec ? Math.round(item.duration) : Math.round(item.duration/60*10)/10;
+      const card = document.createElement('div');
+      card.className = 'seq-item';
+      let chakrasHTML = '';
+      if (item.type === 'asana') {
+        chakrasHTML = '<div class="seq-chakras">' + CHAKRAS.map(c => {
+          const active = (item.chakras[c.id] || 0) > 0;
+          return `<button class="chakra-pill" data-i="${i}" data-c="${c.id}" style="${active ? `border-color:${c.color}; color:${c.color};` : ''}">
+            <span class="chakra-dot" style="background:${active ? c.color : 'var(--border-2)'}"></span>${c.name}
+          </button>`;
+        }).join('') + '</div>';
+      }
+      const sideBadge = item.side ? `<div class="seq-side-badge">${item.side}</div>` : '';
+      const hasRest = t.hasRest;
+      const durationCell = `<div class="seq-stack">
+        <input type="number" class="seq-num" value="${displayVal}" min="${isSec?5:0.5}" max="${isSec?600:60}" step="${isSec?5:0.5}" data-i="${i}" data-field="duration" inputmode="decimal" />
+        <div class="seq-stack-label">${t.unit}</div>
+      </div>`;
+      const restCell = hasRest ? `<div class="seq-stack">
+        <input type="number" class="seq-num" value="${item.restAfter}" min="0" max="180" step="5" data-i="${i}" data-field="rest" inputmode="numeric" />
+        <div class="seq-stack-label">rest s</div>
+      </div>` : '<div></div>';
+      card.innerHTML = `
+        <div class="seq-row">
+          <span class="seq-pos">${i+1}</span>
+          <div class="seq-figure" style="color:var(--text);">${getFigureFor(item)}${sideBadge}</div>
+          <div class="seq-name-wrap">
+            <input class="seq-name" value="${escapeAttr(item.name)}" data-i="${i}" />
+            <div class="seq-type">${t.name}</div>
+          </div>
+          ${durationCell}
+          ${restCell}
+        </div>
+        ${chakrasHTML}
+        <div class="seq-actions">
+          <button class="seq-action" data-i="${i}" data-act="up">↑</button>
+          <button class="seq-action" data-i="${i}" data-act="down">↓</button>
+          <button class="seq-action" data-i="${i}" data-act="del">✕</button>
+        </div>
+      `;
+      wrap.appendChild(card);
+    });
+    wrap.querySelectorAll('.seq-name').forEach(inp => {
+      inp.addEventListener('input', e => { sequence[+e.target.dataset.i].name = e.target.value; persist(); });
+    });
+    wrap.querySelectorAll('.seq-num').forEach(inp => {
+      inp.addEventListener('input', e => {
+        const i = +e.target.dataset.i, field = e.target.dataset.field;
+        const v = parseFloat(e.target.value);
+        if (isNaN(v)) return;
+        if (field === 'duration') {
+          const isSec = TYPES[sequence[i].type].unit === 'sec';
+          sequence[i].duration = isSec ? v : v*60;
+        } else if (field === 'rest') {
+          sequence[i].restAfter = v;
+        }
+        updateStats(); persist();
+      });
+    });
+    wrap.querySelectorAll('[data-act]').forEach(b => {
+      b.addEventListener('click', e => {
+        const i = +e.currentTarget.dataset.i, act = e.currentTarget.dataset.act;
+        if (act === 'del') sequence.splice(i,1);
+        else if (act === 'up' && i > 0) [sequence[i-1],sequence[i]] = [sequence[i],sequence[i-1]];
+        else if (act === 'down' && i < sequence.length-1) [sequence[i+1],sequence[i]] = [sequence[i],sequence[i+1]];
+        render(); persist();
+      });
+    });
+    wrap.querySelectorAll('.chakra-pill').forEach(p => {
+      p.addEventListener('click', e => {
+        const i = +e.currentTarget.dataset.i, c = e.currentTarget.dataset.c;
+        if (sequence[i].chakras[c]) delete sequence[i].chakras[c];
+        else sequence[i].chakras[c] = 1;
+        render(); persist();
+      });
+    });
+    updateStats();
+  }
+
+  function updateStats() {
+    let total = 0, active = 0, asanaCount = 0;
+    const chakraTime = {};
+    CHAKRAS.forEach(c => chakraTime[c.id] = 0);
+    sequence.forEach(item => {
+      total += item.duration + (item.restAfter || 0);
+      if (item.type !== 'rest') active += item.duration;
+      if (item.type === 'asana') {
+        asanaCount++;
+        const weights = Object.values(item.chakras).reduce((a,b)=>a+b,0);
+        if (weights > 0) {
+          Object.entries(item.chakras).forEach(([id,w]) => {
+            chakraTime[id] += (item.duration * w / weights);
+          });
+        }
+      }
+    });
+    document.getElementById('stat-total').textContent = fmtMin(total);
+    document.getElementById('stat-asanas').textContent = asanaCount;
+    document.getElementById('stat-active').textContent = fmtMin(active);
+    drawSpine(chakraTime);
+  }
+  function drawSpine(chakraTime) {
+    const max = Math.max(1, ...Object.values(chakraTime));
+    const svg = document.getElementById('chakra-spine');
+    let html = '<line x1="30" y1="14" x2="30" y2="166" stroke="var(--border-2)" stroke-width="1"/>';
+    CHAKRAS.forEach(c => {
+      const tt = chakraTime[c.id] || 0;
+      const norm = max > 0 ? tt/max : 0;
+      const r = 3 + norm*9;
+      const op = 0.25 + norm*0.75;
+      html += `<circle cx="30" cy="${c.y}" r="${r.toFixed(1)}" fill="${c.color}" opacity="${op.toFixed(2)}"><title>${c.name}: ${fmtMin(tt)}</title></circle>`;
+    });
+    svg.innerHTML = html;
+    const legend = document.getElementById('chakra-legend');
+    const totalCT = Object.values(chakraTime).reduce((a,b)=>a+b,0);
+    if (totalCT === 0) {
+      legend.innerHTML = '<span style="color:var(--text-3); grid-column:1/-1;">No asanas yet</span>';
+    } else {
+      legend.innerHTML = CHAKRAS.map(c => {
+        const tt = chakraTime[c.id] || 0;
+        if (tt === 0) return '';
+        const pct = Math.round(tt/totalCT*100);
+        return `<div style="display:flex; align-items:center; gap:4px;"><span style="width:6px; height:6px; border-radius:50%; background:${c.color};"></span><span>${c.name} ${pct}%</span></div>`;
+      }).filter(Boolean).join('');
+    }
+  }
+
+  // ============== SAVE/LOAD ==============
+  document.getElementById('save-btn').addEventListener('click', () => {
+    if (sequence.length === 0) return;
+    const name = prompt('Name this sequence:', 'Practice ' + (saved.length+1));
+    if (!name) return;
+    saved.push({name, seq: JSON.parse(JSON.stringify(sequence))});
+    renderSaved(); persist();
+  });
+  document.getElementById('load-btn').addEventListener('click', () => {
+    const el = document.getElementById('saved-list');
+    el.style.display = el.style.display === 'none' ? 'block' : 'none';
+    renderSaved();
+  });
+  function renderSaved() {
+    const el = document.getElementById('saved-list');
+    if (saved.length === 0) {
+      el.innerHTML = '<div class="empty" style="padding:12px;">No saved sequences yet.</div>';
+      return;
+    }
+    el.innerHTML = saved.map((s,i) => {
+      const total = s.seq.reduce((a,b)=>a + b.duration + (b.restAfter||0), 0);
+      return `<div class="saved-item">
+        <div><strong>${escapeAttr(s.name)}</strong> <span style="color:var(--text-2);"> · ${fmtMin(total)}</span></div>
+        <div class="actions">
+          <button data-load="${i}">Load</button>
+          <button data-del="${i}">✕</button>
+        </div>
+      </div>`;
+    }).join('');
+    el.querySelectorAll('[data-load]').forEach(b => b.addEventListener('click', e => {
+      sequence = JSON.parse(JSON.stringify(saved[+e.target.dataset.load].seq));
+      render(); persist();
+    }));
+    el.querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', e => {
+      saved.splice(+e.target.dataset.del,1); renderSaved(); persist();
+    }));
+  }
+
+  // ============== GENERATOR ==============
+  const gdur = document.getElementById('gen-duration');
+  const gasa = document.getElementById('gen-asana');
+  const grest = document.getElementById('gen-rest');
+  gdur.oninput = () => document.getElementById('gen-duration-out').textContent = gdur.value+' min';
+  gasa.oninput = () => document.getElementById('gen-asana-out').textContent = gasa.value+' min';
+  grest.oninput = () => document.getElementById('gen-rest-out').textContent = grest.value+' sec';
+
+  const focusRow = document.getElementById('chakra-focus-row');
+  const focusState = {};
+  CHAKRAS.forEach(c => {
+    const btn = document.createElement('button');
+    btn.className = 'chip';
+    btn.innerHTML = `<span style="width:8px; height:8px; border-radius:50%; background:${c.color}; display:inline-block;"></span>${c.name}`;
+    btn.addEventListener('click', () => {
+      focusState[c.id] = !focusState[c.id];
+      btn.style.borderColor = focusState[c.id] ? c.color : '';
+      btn.style.color = focusState[c.id] ? c.color : '';
+    });
+    focusRow.appendChild(btn);
+  });
+
+  function asanaTimeCost(name, asanaMin, restSec) {
+    const unitSec = asanaMin*60 + restSec;
+    return POLAR_NAMES.has(name) ? unitSec*2 : unitSec;
+  }
+  document.getElementById('generate-btn').addEventListener('click', () => {
+    const totalMin = +gdur.value, asanaMin = +gasa.value, restSec = +grest.value;
+    const inc = {
+      warmup: document.getElementById('inc-warmup').checked,
+      pranayama: document.getElementById('inc-pranayama').checked,
+      meditation: document.getElementById('inc-meditation').checked,
+      savasana: document.getElementById('inc-savasana').checked,
+    };
+    const warmupMin = inc.warmup ? Math.max(5, Math.round(totalMin*0.10)) : 0;
+    const pranayamaMin = inc.pranayama ? Math.max(5, Math.round(totalMin*0.10)) : 0;
+    const meditationMin = inc.meditation ? Math.max(5, Math.round(totalMin*0.10)) : 0;
+    const savasanaMin = inc.savasana ? Math.max(5, Math.round(totalMin*0.10)) : 0;
+    const fixedMin = warmupMin + pranayamaMin + meditationMin + savasanaMin;
+    const asanaBlockSec = Math.max(5*60, (totalMin - fixedMin)*60);
+    const focused = Object.keys(focusState).filter(k => focusState[k]);
+    const focusedTags = focused.map(id => CHAKRAS.find(c => c.id === id).tag);
+
+    sequence = [];
+    if (warmupMin > 0) {
+      const perWarmupSec = Math.max(20, Math.round(warmupMin*60/WARMUP_LIBRARY.length));
+      WARMUP_LIBRARY.forEach(w => addSegment('warmup', {name:w, duration:perWarmupSec, restAfter:30}));
+    }
+    const fullPassSec = ASANA_LIBRARY.reduce((sum,a)=>sum+asanaTimeCost(a.name,asanaMin,restSec),0);
+    let plan = [], spent = 0;
+    if (asanaBlockSec >= fullPassSec) {
+      ASANA_LIBRARY.forEach(a => { plan.push(a.name); spent += asanaTimeCost(a.name,asanaMin,restSec); });
+      const pool = focused.length
+        ? ASANA_LIBRARY.filter(a => a.tags.some(t => focusedTags.includes(t)))
+        : ASANA_LIBRARY;
+      const use = pool.length ? pool : ASANA_LIBRARY;
+      let i = 0;
+      while (true) {
+        const cand = use[i % use.length];
+        const cost = asanaTimeCost(cand.name,asanaMin,restSec);
+        if (spent+cost > asanaBlockSec) break;
+        plan.push(cand.name); spent += cost; i++;
+        if (i > 200) break;
+      }
+    } else {
+      const list = focused.length
+        ? ASANA_LIBRARY.slice().sort((a,b) => {
+            const af = a.tags.some(t => focusedTags.includes(t)) ? 1 : 0;
+            const bf = b.tags.some(t => focusedTags.includes(t)) ? 1 : 0;
+            return bf - af;
+          })
+        : ASANA_LIBRARY;
+      for (const a of list) {
+        const cost = asanaTimeCost(a.name,asanaMin,restSec);
+        if (spent+cost > asanaBlockSec) continue;
+        plan.push(a.name); spent += cost;
+      }
+    }
+    plan.forEach(name => addAsanaSegment(name, {duration:asanaMin*60, restAfter:restSec}));
+    if (pranayamaMin > 0) addSegment('pranayama', {name: pranayamaList[0] || 'Pranayama', duration: pranayamaMin*60});
+    if (meditationMin > 0) addSegment('meditation', {name: meditationList[0] || 'Meditation', duration: meditationMin*60});
+    if (savasanaMin > 0) addSegment('savasana', {duration: savasanaMin*60});
+
+    document.querySelector('[data-tab="build"]').click();
+    render(); persist();
+  });
+
+  // ============== AUDIO ==============
+  function setAudioRadio(v) { document.querySelector(`input[name="audio"][value="${v}"]`).checked = true; }
+  setAudioRadio(audioPrefs.kind);
+  document.getElementById('vol').value = audioPrefs.volume;
+  document.getElementById('vol-out').textContent = audioPrefs.volume;
+  document.getElementById('bell-toggle').checked = audioPrefs.bell;
+
+  document.querySelectorAll('input[name="audio"]').forEach(r => {
+    r.addEventListener('change', () => {
+      const v = document.querySelector('input[name="audio"]:checked').value;
+      audioPrefs.kind = v;
+      document.getElementById('custom-upload').style.display = v === 'custom' ? 'block' : 'none';
+      handleBackgroundAudio(v);
+      persist();
+    });
+  });
+  document.getElementById('custom-upload').style.display = audioPrefs.kind === 'custom' ? 'block' : 'none';
+  document.getElementById('audio-file').addEventListener('change', e => {
+    const f = e.target.files[0];
+    if (f) {
+      document.getElementById('audio-file-name').textContent = f.name;
+      customAudioUrl = URL.createObjectURL(f);
+    }
+  });
+  const vol = document.getElementById('vol');
+  vol.oninput = () => {
+    document.getElementById('vol-out').textContent = vol.value;
+    audioPrefs.volume = +vol.value;
+    setBgVolume(+vol.value/100);
+    persist();
+  };
+  document.getElementById('bell-toggle').addEventListener('change', e => {
+    audioPrefs.bell = e.target.checked; persist();
+  });
+
+  let audioCtx = null, bgNodes = null, bgGain = null;
+  let customAudio = null, customAudioUrl = null;
+  function ensureCtx() { if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+  function setBgVolume(v) { if (bgGain) bgGain.gain.value = v*0.3; if (customAudio) customAudio.volume = v; }
+  function stopBg() {
+    if (bgNodes) { bgNodes.forEach(n => { try { n.stop(); } catch(e){} }); bgNodes = null; }
+    if (customAudio) { customAudio.pause(); customAudio = null; }
+  }
+  function handleBackgroundAudio(kind) {
+    stopBg();
+    if (kind === 'silence') return;
+    ensureCtx();
+    bgGain = audioCtx.createGain();
+    bgGain.gain.value = (+vol.value/100)*0.3;
+    bgGain.connect(audioCtx.destination);
+    if (kind === 'drone') {
+      bgNodes = [110,165,220].map((f,i) => {
+        const osc = audioCtx.createOscillator();
+        osc.type = i === 0 ? 'sine' : 'triangle';
+        osc.frequency.value = f;
+        const g = audioCtx.createGain();
+        g.gain.value = i === 0 ? 1 : 0.3;
+        osc.connect(g).connect(bgGain);
+        osc.start();
+        return osc;
+      });
+    } else if (kind === 'tanpura') {
+      bgNodes = [146.83,220,293.66,196].map((f,i) => {
+        const osc = audioCtx.createOscillator();
+        osc.type = 'triangle';
+        osc.frequency.value = f;
+        const g = audioCtx.createGain();
+        g.gain.value = 0.25;
+        const lfo = audioCtx.createOscillator();
+        lfo.frequency.value = 0.08 + i*0.02;
+        const lg = audioCtx.createGain();
+        lg.gain.value = 0.15;
+        lfo.connect(lg).connect(g.gain);
+        lfo.start();
+        osc.connect(g).connect(bgGain);
+        osc.start();
+        return osc;
+      });
+    } else if (kind === 'custom' && customAudioUrl) {
+      customAudio = new Audio(customAudioUrl);
+      customAudio.loop = true;
+      customAudio.volume = +vol.value/100;
+      customAudio.play().catch(()=>{});
+    }
+  }
+  function playBell() {
+    if (!document.getElementById('bell-toggle').checked) return;
+    ensureCtx();
+    const now = audioCtx.currentTime;
+    [528,792].forEach((freq,i) => {
+      const osc = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      osc.frequency.value = freq;
+      osc.type = 'sine';
+      g.gain.setValueAtTime(0, now);
+      g.gain.linearRampToValueAtTime(0.15*(+vol.value/100 || 0.4), now+0.05);
+      g.gain.exponentialRampToValueAtTime(0.001, now+2.5);
+      osc.connect(g).connect(audioCtx.destination);
+      osc.start(now+i*0.05);
+      osc.stop(now+2.6);
+    });
+  }
+
+  // ============== PRACTICE ==============
+  function buildRunList() {
+    const out = [];
+    sequence.forEach(s => {
+      out.push(Object.assign({}, s, {_isRest:false}));
+      if (s.restAfter && s.restAfter > 0) {
+        out.push({id:uid(), type:'rest', name:'Rest', duration:s.restAfter, chakras:{}, _isRest:true});
+      }
+    });
+    return out;
+  }
+  function refreshPractice() {
+    runList = buildRunList();
+    const empty = document.getElementById('practice-empty');
+    const active = document.getElementById('practice-active');
+    if (runList.length === 0) { empty.style.display='block'; active.style.display='none'; return; }
+    empty.style.display = 'none';
+    active.style.display = 'block';
+    if (!playState.playing && playState.remaining === 0) {
+      playState.idx = 0;
+      playState.remaining = runList[0].duration;
+      playState.total = runList[0].duration;
+    }
+    updatePracticeUI();
+  }
+  function updatePracticeUI() {
+    const cur = runList[playState.idx];
+    if (!cur) return;
+    const t = TYPES[cur.type];
+    document.getElementById('now-label').textContent = playState.playing ? 'Now' : 'Up next';
+    document.getElementById('now-title').textContent = cur.name;
+    document.getElementById('now-sub').textContent = t.name + ' · ' + (playState.idx+1) + ' of ' + runList.length;
+    document.getElementById('timer-display').textContent = fmtTime(playState.remaining);
+    document.getElementById('timer-of').textContent = 'of ' + fmtTime(playState.total);
+    const fig = document.getElementById('now-figure');
+    fig.style.color = t.color;
+    fig.innerHTML = `<div style="width:170px; height:170px; display:flex; align-items:center; justify-content:center;">${getFigureFor(cur)}</div>` +
+      (cur.side ? `<div class="now-side-badge">${cur.side} side</div>` : '');
+    const ring = document.getElementById('progress-ring');
+    const C = 553;
+    const pct = playState.total > 0 ? (playState.total - playState.remaining)/playState.total : 0;
+    ring.setAttribute('stroke-dashoffset', String(C*(1-pct)));
+    ring.setAttribute('stroke', t.color);
+    const up = document.getElementById('upcoming');
+    up.innerHTML = runList.slice(playState.idx+1, playState.idx+8).map(s => {
+      return `<div class="upcoming-item">
+        <div class="upcoming-fig" style="color:var(--text);">${getFigureFor(s)}</div>
+        <span style="flex:1;">${escapeAttr(s.name)}</span>
+        <span style="color:var(--text-2);">${fmtTime(s.duration)}</span>
+      </div>`;
+    }).join('') || '<div class="empty" style="padding:12px;">End of practice</div>';
+    document.getElementById('play-icon').textContent = playState.playing ? '⏸' : '▶';
+  }
+  function tick() {
+    if (!playState.playing) return;
+    playState.remaining -= 1;
+    if (playState.remaining <= 0) {
+      playBell();
+      playState.idx += 1;
+      if (playState.idx >= runList.length) {
+        playState.playing = false;
+        clearInterval(playState.interval);
+        playState.idx = 0; playState.remaining = 0; playState.total = 0;
+        updatePracticeUI();
+        return;
+      }
+      playState.total = runList[playState.idx].duration;
+      playState.remaining = playState.total;
+    }
+    updatePracticeUI();
+  }
+  document.getElementById('play-btn').addEventListener('click', () => {
+    ensureCtx();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    if (playState.playing) {
+      playState.playing = false;
+      clearInterval(playState.interval);
+    } else {
+      playState.playing = true;
+      if (playState.total === 0) {
+        playState.total = runList[playState.idx].duration;
+        playState.remaining = playState.total;
+      }
+      playBell();
+      playState.interval = setInterval(tick, 1000);
+      // Keep screen awake if possible
+      if ('wakeLock' in navigator) {
+        navigator.wakeLock.request('screen').catch(()=>{});
+      }
+    }
+    updatePracticeUI();
+  });
+  document.getElementById('stop-btn').addEventListener('click', () => {
+    playState.playing = false; clearInterval(playState.interval);
+    playState.idx = 0;
+    playState.remaining = runList[0] ? runList[0].duration : 0;
+    playState.total = playState.remaining;
+    updatePracticeUI();
+  });
+  document.getElementById('prev-btn').addEventListener('click', () => {
+    playState.idx = Math.max(0, playState.idx-1);
+    playState.total = runList[playState.idx].duration;
+    playState.remaining = playState.total;
+    updatePracticeUI();
+  });
+  document.getElementById('next-btn').addEventListener('click', () => {
+    playState.idx = Math.min(runList.length-1, playState.idx+1);
+    playState.total = runList[playState.idx].duration;
+    playState.remaining = playState.total;
+    updatePracticeUI();
+  });
+
+  // initial
+  render();
+})();
+</script>
+</body>
+</html>
